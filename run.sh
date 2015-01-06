@@ -28,7 +28,6 @@ for line in $(ls $LIBS_PATH); do
     fi
 done
 
-:<<'BLOCK'
 #Get Records(locations, sponsors, study_type, conditions)
 cd $SRC_PATH
 javac -classpath $LIBS Xml2Record.java -d $BIN_PATH
@@ -57,6 +56,4 @@ java -classpath $LIBS Xml2Json $CLINICAL_TRIALS_PATH $RESULT_PATH/clinical.json
 #query map.bing.com to get Positions of Address
 cd $SCRIPT_PATH
 sh query.sh
-
-BLOCK
 
