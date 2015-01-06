@@ -38,6 +38,7 @@ public class JsonAddPos{
         try {
             radd2pos = new BufferedReader(new FileReader(fadd2pos));
         } catch ( FileNotFoundException e) {
+            e.printStackTrace();
             return; 
         }
         add2lat = new HashMap<String, Double>();
@@ -58,6 +59,7 @@ public class JsonAddPos{
         try {
             reader = new BufferedReader(new FileReader(file));
         } catch ( FileNotFoundException e) {
+            e.printStackTrace();
             return; 
         }
         try {
