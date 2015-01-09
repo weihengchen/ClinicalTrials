@@ -13,9 +13,11 @@ BIN_PATH=$COMMON/bin
 SRC_PATH=$COMMON/src
 RESULT_PATH=$COMMON/result
 SCRIPT_PATH=$COMMON/script
+LOG_PATH=$COMMON/log
 
 mkdir -p $BIN_PATH
 mkdir -p $RESULT_PATH
+mkdir -p $LOG_PATH
 
 LIBS='.'
 
@@ -55,5 +57,21 @@ java -classpath $LIBS Xml2Json $CLINICAL_TRIALS_PATH $RESULT_PATH/clinical.json
 
 #query map.bing.com to get Positions of Address
 cd $SCRIPT_PATH
-sh query.sh
+sh query.sh $RESULT_PATH/uniq_locations.txt $RESULT_PATH/ positions.txt
 
+#add position to clinical trails json
+cd $SRC_PATH
+javac -classpath $LIBS JsonAddPos.java -d $BIN_PATH
+
+cd $BIN_PATH
+java -classpath $LIBS JsonAddPos  $RESULT_PATH/positions.txt $RESULT_PATH/clinical.json > $RESULT_PATH/clinical.pos.json 2>$LOG_PATH/error.log
+
+cd $SRC_PATH
+javac -classpath $LIBS JsonSchema.java -d $BIN_PATH
+cd $BIN_PATH
+java -classpath $LIBS JsonSchema $RESULT_PATH/clinical.pos.json $RESULT_PATH/schema.txt
+
+cd $SRC_PATH
+javac -classpath $LIBS CountAdverseEvent.java -d $BIN_PATH
+cd $BIN_PATH
+java -classpath $LIBS CountAdverseEvent $RESULT_PATH/clinical.pos.json $RESULT_PATH/adverse_event.txt
