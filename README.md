@@ -6,7 +6,7 @@ Libraries:
 
 Process:
 
-- XML -> Statistics(Locations, Conditions, Sponsors, Study_type)
+- XML -> Statistics(Locations, Conditions, Sponsors, Study_type, Schema, Adverse Events)
 
 - Address -> Positions(Longitude, Latitude)
 
